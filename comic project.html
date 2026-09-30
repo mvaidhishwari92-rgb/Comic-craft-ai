@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI Comic Craft</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f3efff;
+    color: #222;
+}
+
+header {
+    background: #6c4ab6;
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+header h1 {
+    font-size: 36px;
+    margin-bottom: 8px;
+}
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+.box {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 15px #0002;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px; 
+    font-size: 16px;
+}
+
+textarea {
+    height: 150px;
+    resize: none;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: #6c4ab6;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #52358f;
+}
+
+#comicTitle {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#comicPanels {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.panel {
+    min-height: 220px;
+    border: 4px solid #222;
+    border-radius: 12px;
+    padding: 20px;
+    background: #fffdf0;
+}
+
+.panel h3 {
+    margin-bottom: 20px;
+}
+
+.speech {
+    background: white;
+    border: 2px solid #222;
+    border-radius: 20px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+@media(max-width:600px) {
+    #comicPanels {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🎨 AI Comic Craft</h1>
+    <p>Turn your story into a comic!</p>
+</header>
+
+<div class="container">
+
+    <div class="box">
+        <h2>✨ Create Your Comic</h2>
+
+        <input
+            type="text"
+            id="title"
+            placeholder="Enter comic title"
+        >
+
+        <textarea
+            id="story"
+            placeholder="Enter your story..."
+        ></textarea>
+
+        <button onclick="generateComic()">
+            🚀 Generate Comic
+        </button>
+    </div>
+
+    <div class="box">
+        <h2>Your Comic</h2>
+
+        <div id="comicTitle"></div>
+
+        <div id="comicPanels"></div>
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2026 AI Comic Craft</p>
+</footer>
+
+<script>
+
+function generateComic() {
+
+    let title = document.getElementById("title").value;
+    let story = document.getElementById("story").value;
+
+    if (title.trim() === "" || story.trim() === "") {
+        alert("Please enter the title and story!");
+        return;
+    }
+
+    document.getElementById("comicTitle").innerText = title;
+
+    let sentences = story
+        .split(/[.!?]/)
+        .map(x => x.trim())
+        .filter(x => x !== "");
+
+    let panels = document.getElementById("comicPanels");
+
+    panels.innerHTML = "";
+
+    sentences.forEach((sentence, index) => {
+
+        let panel = document.createElement("div");
+
+        panel.className = "panel";
+
+        panel.innerHTML = `
+            <h3>📖 Panel ${index + 1}</h3>
+
+            <div class="speech">
+                💬 ${sentence}
+            </div>
+        `;
+
+        panels.appendChild(panel);
+    });
+
+    document.querySelector(".box:nth-child(2)")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+}
+
+</script>
+
+</body>
+</html>
